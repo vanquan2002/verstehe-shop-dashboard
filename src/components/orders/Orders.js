@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
-const Order = () => {
+const Order = ({ orders }) => {
   const navigate = useNavigate();
 
   return (
@@ -32,38 +33,30 @@ const Order = () => {
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
-        <tr className="hover:bg-gray-100">
-          <td className="px-6 py-4 whitespace-no-wrap">
-            Women red heels sandal
-          </td>
-          <td className="px-6 py-4 whitespace-no-wrap">linh29@gmail.com</td>
-          <td className="px-6 py-4 whitespace-no-wrap">$2343</td>
-          <td className="px-6 py-4 whitespace-no-wrap">Not Paid</td>
-          <td className="px-6 py-4 whitespace-no-wrap">03/06/2024</td>
-          <td className="px-6 py-4 whitespace-no-wrap">Not Delivered</td>
-          <td
-            onClick={() => navigate("/order")}
-            className="px-6 py-4 whitespace-no-wrap"
-          >
-            detail
-          </td>
-        </tr>
-        <tr className="hover:bg-gray-100">
-          <td className="px-6 py-4 whitespace-no-wrap">
-            Men blue heels sandal
-          </td>
-          <td className="px-6 py-4 whitespace-no-wrap">linh29@gmail.com</td>
-          <td className="px-6 py-4 whitespace-no-wrap">$2343</td>
-          <td className="px-6 py-4 whitespace-no-wrap">Not Paid</td>
-          <td className="px-6 py-4 whitespace-no-wrap">03/06/2024</td>
-          <td className="px-6 py-4 whitespace-no-wrap">Not Delivered</td>
-          <td
-            onClick={() => navigate("/order")}
-            className="px-6 py-4 whitespace-no-wrap"
-          >
-            detail
-          </td>
-        </tr>
+        {orders.map((item, i) => (
+          <tr key={i} className="hover:bg-gray-100">
+            <td className="px-6 py-4 whitespace-no-wrap">{item.user.name}</td>
+            <td className="px-6 py-4 whitespace-no-wrap">{item.user.email}</td>
+            <td className="px-6 py-4 whitespace-no-wrap">${item.totalPrice}</td>
+            <td className="px-6 py-4 whitespace-no-wrap">
+              {item.isPaid
+                ? "Paid at: " + moment(item.paidAt).format("lll")
+                : "Not Paid"}
+            </td>
+            <td className="px-6 py-4 whitespace-no-wrap">
+              {moment(item.createdAt).format("lll")}
+            </td>
+            <td className="px-6 py-4 whitespace-no-wrap">
+              {item.isDelivered ? "Delivered" : "Not Delivered"}
+            </td>
+            <td
+              onClick={() => navigate(`/order/${item._id}`)}
+              className="px-6 py-4 whitespace-no-wrap"
+            >
+              detail
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

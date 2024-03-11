@@ -39,7 +39,7 @@ function App() {
             element={<PrivateRouter comp={<OrderScreen />} />}
           />
           <Route
-            path="/order"
+            path="/order/:id"
             element={<PrivateRouter comp={<OrderDetailScreen />} />}
           />
           <Route

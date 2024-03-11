@@ -3,9 +3,16 @@ import { thunk } from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { userListReducer, userLoginReducer } from "./reducers/UserReducers";
 import {
+  orderDeliveredReducer,
+  orderDetailsReducer,
+  orderListReducer,
+} from "./reducers/OrderReducers";
+import {
   productCreateReducer,
   productDeleteReducer,
+  productEditReducer,
   productListReducer,
+  productUpdateReducer,
 } from "./reducers/ProductReducers";
 
 const reducer = combineReducers({
@@ -14,6 +21,11 @@ const reducer = combineReducers({
   productList: productListReducer,
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,
+  productEdit: productEditReducer,
+  productUpdate: productUpdateReducer,
+  orderList: orderListReducer,
+  orderDetails: orderDetailsReducer,
+  orderDeliver: orderDeliveredReducer,
 });
 
 const userInfoFromLocalStorage = localStorage.getItem("userInfo")
