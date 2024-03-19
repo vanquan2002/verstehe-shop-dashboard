@@ -40,7 +40,7 @@ const AddProductMain = () => {
       developerKey: process.env.REACT_APP_DRIVE_PICKER_DEVELOPER_KEY,
       viewId: "DOCS",
       token:
-        "ya29.a0Ad52N38og2MIxJ89GOftNlw3r8YMKFdN6bjcZWOwd1k40KHgTss0y9Dv-A1Xgld47tfZ8Jl6Is0G7jLtiaGeUFtRLM2WlFPFbs-Hf8F-8IieiDpjihTSkMj8l63GFfcdgT5X9jJ521uELwfvc17FEgBAkOsPgBb2JixNaCgYKAfsSARMSFQHGX2MiU6TF-LlGynjXesdvaw7ojA0171",
+        "ya29.a0Ad52N3_C7RQxGky-C135vFS_YaDrpwDj7QleiWB6oAJdtnt48cmGuov-W_GgF64bWh0tYVhyUQRm7EQdvXDC9r3KHD3ghLmC5zqP0v7u2GxqjM7W7EdhiFqZoWuHZdqmf0wnxJ-hh0TiO6bD_TFV6V1tbpY4QtQc60p6aCgYKAU8SARMSFQHGX2MisXQspADT9oKsNysfwSjbmg0171",
       showUploadView: true,
       showUploadFolders: true,
       supportDrives: true,
