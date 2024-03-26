@@ -84,7 +84,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 };
 
 export const createProduct =
-  (name, price, description, image, countInStock) =>
+  (name, price, description, countInStock, images, sizes, color) =>
   async (dispatch, getState) => {
     try {
       dispatch({
@@ -100,7 +100,7 @@ export const createProduct =
       };
       const { data } = await axios.post(
         `/api/products/`,
-        { name, price, description, image, countInStock },
+        { name, price, description, countInStock, images, sizes, color },
         config
       );
       dispatch({

@@ -16,6 +16,9 @@ const EditProductMain = ({ productId }) => {
   const [image, setImage] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
+  const [images, setImages] = useState([]);
+  const [sizes, setSizes] = useState([]);
+
   const toastObject = {
     position: "top-right",
     autoClose: 5000,
@@ -46,6 +49,8 @@ const EditProductMain = ({ productId }) => {
         description,
         image,
         countInStock,
+        images,
+        sizes,
       })
     );
   };
@@ -63,6 +68,8 @@ const EditProductMain = ({ productId }) => {
         setImage(product.image);
         setCountInStock(product.countInStock);
         setDescription(product.description);
+        setImages(product.images);
+        setSizes(product.sizes);
       }
     }
   }, [product, dispatch, productId, successUpdate]);
@@ -130,7 +137,16 @@ const EditProductMain = ({ productId }) => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <p>Images:</p>
+            <p>Sizes:</p>
+            <input
+              className="border-2 border-indigo-600 m-2 p-2"
+              type="text"
+              placeholder="Type here"
+              required
+              value={sizes}
+              onChange={(e) => setSizes(e.target.value)}
+            />
+            <p>Image:</p>
             <input
               className="border-2 border-indigo-600 m-2 p-2"
               type="text"
@@ -139,7 +155,21 @@ const EditProductMain = ({ productId }) => {
               value={image}
               onChange={(e) => setImage(e.target.value)}
             />
-            <input className="border-2 border-indigo-600 m-2 p-2" type="file" />
+            <p>Images:</p>
+            {images.length > 0 &&
+              images.map((img, i) => (
+                <input
+                  key={i}
+                  className="border-2 border-indigo-600 m-2 p-2"
+                  type="text"
+                  placeholder="Enter Image URL"
+                  required
+                  value={img}
+                  onChange={(e) =>
+                    setImages((prev) => [...prev, e.target.value])
+                  }
+                />
+              ))}
           </form>
         )}
       </div>

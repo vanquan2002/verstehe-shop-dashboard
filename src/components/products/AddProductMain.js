@@ -11,9 +11,11 @@ import useDrivePicker from "react-google-drive-picker";
 const AddProductMain = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState([]);
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
+  const [sizes, setSizes] = useState([]);
+  const [color, setColor] = useState("");
   const toastObject = {
     position: "top-right",
     autoClose: 5000,
@@ -30,9 +32,19 @@ const AddProductMain = () => {
 
   const submitHandle = (e) => {
     e.preventDefault();
-    dispatch(createProduct(name, price, description, image, countInStock));
+    dispatch(
+      createProduct(
+        name,
+        price,
+        description,
+        countInStock,
+        images,
+        sizes,
+        color
+      )
+    );
   };
-
+  console.log(color);
   const [openPicker, authResponse] = useDrivePicker();
   const handleOpenPicker = () => {
     openPicker({
@@ -40,7 +52,7 @@ const AddProductMain = () => {
       developerKey: process.env.REACT_APP_DRIVE_PICKER_DEVELOPER_KEY,
       viewId: "DOCS",
       token:
-        "ya29.a0Ad52N3_C7RQxGky-C135vFS_YaDrpwDj7QleiWB6oAJdtnt48cmGuov-W_GgF64bWh0tYVhyUQRm7EQdvXDC9r3KHD3ghLmC5zqP0v7u2GxqjM7W7EdhiFqZoWuHZdqmf0wnxJ-hh0TiO6bD_TFV6V1tbpY4QtQc60p6aCgYKAU8SARMSFQHGX2MisXQspADT9oKsNysfwSjbmg0171",
+        "ya29.a0Ad52N3_GFwr2diHo_EgVTxSbNow2qkCMJK8ap9y_6CColQaBNItfAUBr0b_RGr192ZON6wZQp3Smo8pexO2IYmQFnqw6-v_OuzxrOOtBQOtEGMiC8GW6m09UGD_hjjjRtoeyo3-_s325-T-mkyPqDnF73MhP2-5fNWJyaCgYKAeMSARMSFQHGX2Mic0nahRWdy8hbp749I0ccgA0171",
       showUploadView: true,
       showUploadFolders: true,
       supportDrives: true,
@@ -48,10 +60,15 @@ const AddProductMain = () => {
       callbackFunction: (data) => {
         if (data.action === "picked") {
           let idImg = `https://lh3.googleusercontent.com/d/${data.docs[0].id}`;
-          setImage(idImg);
+          setImages((prev) => [...prev, idImg]);
         }
       },
     });
+  };
+
+  const setSizeHandle = (text) => {
+    const sizes = text.split(",");
+    setSizes(sizes);
   };
 
   useEffect(() => {
@@ -60,9 +77,11 @@ const AddProductMain = () => {
       dispatch({ type: PRODUCT_CREATE_RESET });
       setName("");
       setPrice(0);
-      setImage("");
       setCountInStock(0);
       setDescription("");
+      setImages([]);
+      setSizes([]);
+      setColor("");
     }
   }, [product, dispatch]);
 
@@ -122,15 +141,30 @@ const AddProductMain = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          <p>Sizes:</p>
+          <input
+            className="border-2 border-indigo-600 m-2 p-2"
+            type="text"
+            placeholder="Type here"
+            required
+            value={sizes}
+            onChange={(e) => setSizeHandle(e.target.value)}
+          />
+          <p>Color:</p>
+          <input
+            className="border-2 border-indigo-600 m-2 p-2"
+            type="text"
+            placeholder="Type here"
+            required
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          />
           <p>Images:</p>
-
-          {image ? (
-            <img width={"20%"} src={image} alt="loading img..." />
-          ) : (
-            <p>Chose image</p>
-          )}
-
-          <p onClick={() => handleOpenPicker()}>Open Picker</p>
+          {images.length > 0 &&
+            images.map((img, i) => (
+              <img key={i} width={"20%"} src={img} alt="loading img..." />
+            ))}
+          <p onClick={() => handleOpenPicker()}>Chose images</p>
         </form>
       </div>
     </>
